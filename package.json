@@ -1,0 +1,37 @@
+{
+  "name": "openclaw-plugin-searnxg-search",
+  "version": "0.0.1",
+  "description": "OpenClaw plugin to use your self-hosted searxng instance as a search engine.",
+  "type": "module",
+  "license": "MIT",
+  "main": "./index.ts",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "files": [
+    "index.ts",
+    "openclaw.plugin.json",
+    "README.md"
+  ],
+  "keywords": [
+    "openclaw",
+    "openclaw-plugin",
+    "searxng",
+    "search"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "typecheck": "bunx tsc --noEmit",
+    "check": "bun run typecheck"
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "dependencies": {
+    "@sinclair/typebox": "^0.34.48"
+  }
+}

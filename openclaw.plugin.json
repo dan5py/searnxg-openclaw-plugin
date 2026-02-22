@@ -1,0 +1,11 @@
+{
+  "id": "searnxg-search",
+  "name": "SearXNG Search",
+  "description": "Query a self-hosted SearXNG instance from OpenClaw.",
+  "version": "0.0.1",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}
