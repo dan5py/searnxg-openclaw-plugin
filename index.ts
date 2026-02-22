@@ -14,6 +14,12 @@ interface SearxngResponse {
   results?: SearxngResult[];
 }
 
+const DEFAULT_PARAMS = {
+  categories: "general",
+  pageno: 1,
+  safesearch: 0,
+};
+
 function formatResults(data: SearxngResponse): string {
   const results = data.results ?? [];
   if (results.length === 0) {
@@ -60,6 +66,7 @@ export default function (api: {
         Type.String({
           description:
             "Comma-separated search categories (e.g. general, images, news)",
+          default: DEFAULT_PARAMS.categories,
         }),
       ),
       engines: Type.Optional(
@@ -74,7 +81,11 @@ export default function (api: {
         }),
       ),
       pageno: Type.Optional(
-        Type.Number({ description: "Page number, default 1" }),
+        Type.Number({
+          description: "Page number",
+          default: DEFAULT_PARAMS.pageno,
+          minimum: 1,
+        }),
       ),
       time_range: Type.Optional(
         Type.Union(
@@ -85,6 +96,7 @@ export default function (api: {
       safesearch: Type.Optional(
         Type.Union([Type.Literal(0), Type.Literal(1), Type.Literal(2)], {
           description: "Safe-search level: 0 = off, 1 = moderate, 2 = strict",
+          default: DEFAULT_PARAMS.safesearch,
         }),
       ),
     }),
@@ -99,15 +111,19 @@ export default function (api: {
       url.searchParams.set("q", params["q"] as string);
 
       const optional: Record<string, string | undefined> = {
-        categories: params["categories"] as string | undefined,
+        categories:
+          (params["categories"] as string | undefined) ??
+          DEFAULT_PARAMS.categories,
         engines: params["engines"] as string | undefined,
         language: params["language"] as string | undefined,
-        pageno: params["pageno"] != null ? String(params["pageno"]) : undefined,
+        pageno: String(
+          (params["pageno"] as number | undefined) ?? DEFAULT_PARAMS.pageno,
+        ),
         time_range: params["time_range"] as string | undefined,
-        safesearch:
-          params["safesearch"] != null
-            ? String(params["safesearch"])
-            : undefined,
+        safesearch: String(
+          (params["safesearch"] as number | undefined) ??
+            DEFAULT_PARAMS.safesearch,
+        ),
       };
 
       for (const [key, value] of Object.entries(optional)) {

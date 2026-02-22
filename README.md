@@ -54,15 +54,15 @@ Set it in your shell profile or OpenClaw environment config.
 
 ### Parameters
 
-| Name         | Type   | Required | Description                                                    |
-| ------------ | ------ | -------- | -------------------------------------------------------------- |
-| `q`          | string | yes      | Search query                                                   |
-| `categories` | string | no       | Comma-separated categories (`general`, `images`, `news`, ...)  |
-| `engines`    | string | no       | Comma-separated engines (`google`, `duckduckgo`, `brave`, ...) |
-| `language`   | string | no       | ISO 639-1 code (`en`, `de`, `fr`, ...)                         |
-| `pageno`     | number | no       | Page number (default 1)                                        |
-| `time_range` | string | no       | `day`, `month`, or `year`                                      |
-| `safesearch` | number | no       | `0` off, `1` moderate, `2` strict                              |
+| Name         | Type   | Required | Default          | Description                                                    |
+| ------------ | ------ | -------- | ---------------- | -------------------------------------------------------------- |
+| `q`          | string | yes      | -                | Search query                                                   |
+| `categories` | string | no       | `general`        | Comma-separated categories (`general`, `images`, `news`, ...)  |
+| `engines`    | string | no       | instance default | Comma-separated engines (`google`, `duckduckgo`, `brave`, ...) |
+| `language`   | string | no       | instance default | ISO 639-1 code (`en`, `de`, `fr`, ...)                         |
+| `pageno`     | number | no       | `1`              | Page number                                                    |
+| `time_range` | string | no       | none             | `day`, `month`, or `year`                                      |
+| `safesearch` | number | no       | `0` (off)        | `0` off, `1` moderate, `2` strict                              |
 
 ### Example usage
 
