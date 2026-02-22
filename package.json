@@ -1,5 +1,5 @@
 {
-  "name": "openclaw-plugin-searnxg-search",
+  "name": "searnxg-search",
   "version": "0.0.1",
   "description": "OpenClaw plugin to use your self-hosted searxng instance as a search engine.",
   "type": "module",
