@@ -14,11 +14,32 @@ interface SearxngResponse {
   results?: SearxngResult[];
 }
 
+interface PluginConfig {
+  baseUrl?: string;
+}
+
+interface OpenClawConfig {
+  plugins?: {
+    entries?: Record<string, { config?: PluginConfig }>;
+  };
+}
+
 const DEFAULT_PARAMS = {
   categories: "general",
   pageno: 1,
   safesearch: 0,
 };
+
+const PLUGIN_ID = "searnxg-search";
+const DEFAULT_BASE_URL = "http://localhost:8080";
+
+function resolveBaseUrl(config: OpenClawConfig | undefined): string {
+  const configuredUrl = config?.plugins?.entries?.[PLUGIN_ID]?.config?.baseUrl;
+  if (typeof configuredUrl === "string" && configuredUrl.trim().length > 0) {
+    return configuredUrl.trim();
+  }
+  return DEFAULT_BASE_URL;
+}
 
 function formatResults(data: SearxngResponse): string {
   const results = data.results ?? [];
@@ -46,6 +67,7 @@ function toolText(text: string) {
 }
 
 export default function (api: {
+  config?: OpenClawConfig;
   registerTool: (tool: {
     name: string;
     description: string;
@@ -102,9 +124,7 @@ export default function (api: {
     }),
 
     async execute(_id, params) {
-      const baseUrl = (
-        process.env["SEARXNG_BASE_URL"] ?? "http://localhost:8080"
-      ).replace(/\/+$/, "");
+      const baseUrl = resolveBaseUrl(api.config).replace(/\/+$/, "");
 
       const url = new URL(`${baseUrl}/search`);
       url.searchParams.set("format", "json");
@@ -139,7 +159,7 @@ export default function (api: {
         const msg =
           err instanceof Error ? err.message : "Unknown network error";
         return toolText(
-          `SearXNG request failed: ${msg}\n\nCheck that SEARXNG_BASE_URL (${baseUrl}) is reachable and the instance is running.`,
+          `SearXNG request failed: ${msg}\n\nCheck plugins.entries.${PLUGIN_ID}.config.baseUrl (current: ${baseUrl}) and ensure your SearXNG instance is running.`,
         );
       }
 

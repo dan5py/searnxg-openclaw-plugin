@@ -42,13 +42,38 @@ openclaw plugins list   # should show searnxg-search
 
 ## Configuration
 
-### Environment variables
+Configure plugin settings in `~/.openclaw/openclaw.json`:
 
-| Variable           | Default                 | Description                       |
-| ------------------ | ----------------------- | --------------------------------- |
-| `SEARXNG_BASE_URL` | `http://localhost:8080` | Base URL of your SearXNG instance |
+```json5
+{
+  plugins: {
+    entries: {
+      "searnxg-search": {
+        enabled: true,
+        config: {
+          baseUrl: "http://localhost:8080",
+        },
+      },
+    },
+  },
+}
+```
 
-Set it in your shell profile or OpenClaw environment config.
+You can also use OpenClaw env substitution if you want to keep values in env:
+
+```json5
+{
+  plugins: {
+    entries: {
+      "searnxg-search": {
+        config: {
+          baseUrl: "${SEARXNG_BASE_URL}",
+        },
+      },
+    },
+  },
+}
+```
 
 ## Tool: `searxng_search`
 

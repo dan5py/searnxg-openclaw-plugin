@@ -6,6 +6,18 @@
   "configSchema": {
     "type": "object",
     "additionalProperties": false,
-    "properties": {}
+    "properties": {
+      "baseUrl": {
+        "type": "string",
+        "default": "http://localhost:8080",
+        "description": "Base URL for your local SearXNG instance."
+      }
+    }
+  },
+  "uiHints": {
+    "baseUrl": {
+      "label": "SearXNG Base URL",
+      "placeholder": "http://localhost:8080"
+    }
   }
 }
